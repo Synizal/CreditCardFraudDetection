@@ -1,0 +1,3 @@
+transaction_type,count,percentage
+normal_trans,283253,99.83328986416473
+fraud_trans,473,0.1667101358352777

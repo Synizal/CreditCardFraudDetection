@@ -1,0 +1,84 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.model-selector {
+    transition: all 0.2s ease;
+}
+
+.model-selector:hover {
+    background-color: #f8f9fa;
+}
+
+.model-selector.active {
+    background-color: #e9f0ff;
+    border-left: 4px solid #0d6efd;
+}
+
+.feature-input {
+    font-family: monospace;
+}
+
+#fraudAlert.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+#fraudAlert.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+#fraudAlert {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.badge.rounded-pill {
+    font-size: 0.9rem;
+}
+
+footer {
+    margin-top: 3rem;
+}
+
+.accordion-body {
+    background-color: #f8f9fa;
+}
+
+/* Progress bar for fraud probability */
+.progress {
+    height: 25px;
+    margin-top: 10px;
+}
+
+/* Custom styling for small screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+} 

@@ -1,0 +1,22 @@
+{
+    "top_models": [
+        {
+            "name": "Random Forest",
+            "f1_score": 0.8342857142857143,
+            "accuracy": 0.9994889507630493,
+            "type": "smote"
+        },
+        {
+            "name": "Random Forest",
+            "f1_score": 0.8313253012048193,
+            "accuracy": 0.9995065731505305,
+            "type": "original"
+        },
+        {
+            "name": "Logistic Regression",
+            "f1_score": 0.6875,
+            "accuracy": 0.9991188806259472,
+            "type": "original"
+        }
+    ]
+}

@@ -1,0 +1,96 @@
+2025-03-25 20:21:01,101 - fraud_detection - INFO - Starting credit card fraud detection analysis
+2025-03-25 20:21:01,101 - fraud_detection - INFO - 
+Loading and preprocessing data:
+2025-03-25 20:21:01,101 - fraud_detection - INFO - Checking for dataset...
+2025-03-25 20:21:01,101 - fraud_detection - INFO - Loading dataset...
+2025-03-25 20:21:02,060 - fraud_detection - INFO - Dataset loaded successfully from creditcard.csv
+2025-03-25 20:21:08,693 - fraud_detection - INFO - Dataset saved to credit_card_fraud_detection\data\creditcard.csv
+2025-03-25 20:21:08,693 - fraud_detection - INFO - 
+Dataset shape: (284807, 31)
+2025-03-25 20:21:08,718 - fraud_detection - INFO - Dataset preview (first 5 rows):
+   Time        V1        V2        V3        V4        V5        V6        V7  ...       V23       V24       V25       V26       V27       V28  Amount  Class
+0   0.0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388  0.239599  ... -0.110474  0.066928  0.128539 -0.189115  0.133558 -0.021053  149.62      0
+1   0.0  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361 -0.078803  ...  0.101288 -0.339846  0.167170  0.125895 -0.008983  0.014724    2.69      0
+2   1.0 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499  0.791461  ...  0.909412 -0.689281 -0.327642 -0.139097 -0.055353 -0.059752  378.66      0
+3   1.0 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203  0.237609  ... -0.190321 -1.175575  0.647376 -0.221929  0.062723  0.061458  123.50      0
+4   2.0 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921  0.592941  ... -0.137458  0.141267 -0.206010  0.502292  0.219422  0.215153   69.99      0
+
+[5 rows x 31 columns]
+2025-03-25 20:21:08,718 - fraud_detection - INFO - 
+Checking for missing values:
+2025-03-25 20:21:08,732 - fraud_detection - INFO - Missing values report saved to credit_card_fraud_detection\reports\missing_values_report.csv
+2025-03-25 20:21:08,733 - fraud_detection - INFO - 
+Handling duplicate records:
+2025-03-25 20:21:09,121 - fraud_detection - INFO - Number of duplicate rows: 1081
+2025-03-25 20:21:09,517 - fraud_detection - INFO - Number of rows after dropping duplicates: 283726
+2025-03-25 20:21:09,521 - fraud_detection - INFO - 
+Checking class balance:
+2025-03-25 20:21:09,524 - fraud_detection - INFO - normal_trans = 283253
+2025-03-25 20:21:09,525 - fraud_detection - INFO - fraud_trans = 473
+2025-03-25 20:21:09,526 - fraud_detection - INFO - percentage_normal_trans = 99.83%
+2025-03-25 20:21:09,526 - fraud_detection - INFO - percentage_fraud_trans = 0.17%
+2025-03-25 20:21:09,529 - fraud_detection - INFO - Class balance report saved to credit_card_fraud_detection\reports\class_balance_report.csv
+2025-03-25 20:21:09,529 - fraud_detection - INFO - 
+Plotting class distribution:
+2025-03-25 20:21:09,798 - fraud_detection - INFO - Class distribution plot saved to credit_card_fraud_detection\reports\class_distribution.png
+2025-03-25 20:21:12,832 - fraud_detection - INFO - Training set shape: (226980, 30)
+2025-03-25 20:21:12,833 - fraud_detection - INFO - Testing set shape: (56746, 30)
+2025-03-25 20:21:12,834 - fraud_detection - INFO - Scaler saved to credit_card_fraud_detection\models\scaler.pkl
+2025-03-25 20:21:12,836 - fraud_detection - INFO - Data splits information saved to credit_card_fraud_detection\reports\data_splits_info.json
+2025-03-25 20:21:13,962 - fraud_detection - INFO - Feature correlation matrix saved to credit_card_fraud_detection\reports\feature_correlation_matrix.png
+2025-03-25 20:21:14,002 - fraud_detection - INFO - 
+Handling imbalanced data with SMOTE:
+2025-03-25 20:21:14,003 - fraud_detection - INFO - Applying SMOTE to handle class imbalance...
+2025-03-25 20:21:14,236 - fraud_detection - INFO - Shape of X_train before SMOTE: (226980, 30)
+2025-03-25 20:21:14,236 - fraud_detection - INFO - Shape of X_train after SMOTE: (453204, 30)
+2025-03-25 20:21:14,238 - fraud_detection - INFO - Class distribution after SMOTE:
+2025-03-25 20:21:14,238 - fraud_detection - INFO - Class
+0    226602
+1    226602
+Name: count, dtype: int64
+2025-03-25 20:21:14,241 - fraud_detection - INFO - SMOTE resampling information saved to credit_card_fraud_detection\reports\smote_resampling_info.json
+2025-03-25 20:21:14,241 - fraud_detection - INFO - 
+Training and evaluating models:
+2025-03-25 20:21:14,241 - fraud_detection - INFO - This may take some time depending on your system...
+2025-03-25 20:21:14,241 - fraud_detection - INFO - Training models on original data...
+2025-03-25 20:21:14,242 - fraud_detection - INFO - Training Logistic Regression...
+2025-03-25 20:21:15,211 - fraud_detection - INFO - All reports for Logistic Regression saved to credit_card_fraud_detection\reports\logistic_regression
+2025-03-25 20:21:15,213 - fraud_detection - INFO - Model saved successfully to credit_card_fraud_detection\models\logistic_regression.pkl
+2025-03-25 20:21:15,213 - fraud_detection - INFO - Logistic Regression - Accuracy: 0.9991, F1 Score: 0.6875
+2025-03-25 20:21:15,213 - fraud_detection - INFO - Training Random Forest...
+2025-03-25 20:24:01,847 - fraud_detection - INFO - All reports for Random Forest saved to credit_card_fraud_detection\reports\random_forest
+2025-03-25 20:24:01,883 - fraud_detection - INFO - Model saved successfully to credit_card_fraud_detection\models\random_forest.pkl
+2025-03-25 20:24:01,883 - fraud_detection - INFO - Random Forest - Accuracy: 0.9995, F1 Score: 0.8313
+2025-03-25 20:24:01,885 - fraud_detection - INFO - Applying SMOTE for handling imbalanced data...
+2025-03-25 20:24:01,885 - fraud_detection - INFO - Applying SMOTE to handle class imbalance...
+2025-03-25 20:24:02,039 - fraud_detection - INFO - Shape of X_train before SMOTE: (226980, 30)
+2025-03-25 20:24:02,039 - fraud_detection - INFO - Shape of X_train after SMOTE: (453204, 30)
+2025-03-25 20:24:02,042 - fraud_detection - INFO - Class distribution after SMOTE:
+2025-03-25 20:24:02,042 - fraud_detection - INFO - Class
+0    226602
+1    226602
+Name: count, dtype: int64
+2025-03-25 20:24:02,044 - fraud_detection - INFO - SMOTE resampling information saved to credit_card_fraud_detection\reports\smote_resampling_info.json
+2025-03-25 20:24:02,045 - fraud_detection - INFO - Training models on SMOTE-resampled data...
+2025-03-25 20:24:02,045 - fraud_detection - INFO - Training Logistic Regression with SMOTE...
+2025-03-25 20:24:03,704 - fraud_detection - INFO - All reports for Logistic Regression (SMOTE) saved to credit_card_fraud_detection\reports\logistic_regression
+2025-03-25 20:24:03,706 - fraud_detection - INFO - Model saved successfully to credit_card_fraud_detection\models\logistic_regression_smote.pkl
+2025-03-25 20:24:03,706 - fraud_detection - INFO - Logistic Regression with SMOTE - Accuracy: 0.9737, F1 Score: 0.1000
+2025-03-25 20:24:03,707 - fraud_detection - INFO - Training Random Forest with SMOTE...
+2025-03-25 20:29:01,090 - fraud_detection - INFO - All reports for Random Forest (SMOTE) saved to credit_card_fraud_detection\reports\random_forest
+2025-03-25 20:29:01,133 - fraud_detection - INFO - Model saved successfully to credit_card_fraud_detection\models\random_forest_smote.pkl
+2025-03-25 20:29:01,133 - fraud_detection - INFO - SMOTE version of Random Forest performs better (F1: 0.8343 vs 0.8313)
+2025-03-25 20:29:01,133 - fraud_detection - INFO - Random Forest with SMOTE - Accuracy: 0.9995, F1 Score: 0.8343
+2025-03-25 20:29:01,135 - fraud_detection - INFO - Top 3 Models:
+2025-03-25 20:29:01,135 - fraud_detection - INFO - 1. Random Forest (smote) - F1: 0.8343, Acc: 0.9995
+2025-03-25 20:29:01,135 - fraud_detection - INFO - 2. Random Forest (original) - F1: 0.8313, Acc: 0.9995
+2025-03-25 20:29:01,136 - fraud_detection - INFO - 3. Logistic Regression (original) - F1: 0.6875, Acc: 0.9991
+2025-03-25 20:29:01,142 - fraud_detection - INFO - 
+Generating comparative visualizations:
+2025-03-25 20:29:01,142 - fraud_detection - INFO - Generating comparative visualizations for all models
+2025-03-25 20:29:01,144 - fraud_detection - INFO - Model comparison data saved to credit_card_fraud_detection\reports\model_comparison.csv
+2025-03-25 20:29:01,831 - fraud_detection - INFO - Comparative visualizations saved to credit_card_fraud_detection\reports\model_comparison.png
+2025-03-25 20:29:02,055 - fraud_detection - INFO - 
+Credit card fraud detection analysis completed successfully!
+2025-03-25 20:29:02,056 - fraud_detection - INFO - All results have been saved to credit_card_fraud_detection\reports
+2025-03-25 20:29:02,056 - fraud_detection - INFO - All models have been saved to credit_card_fraud_detection\models

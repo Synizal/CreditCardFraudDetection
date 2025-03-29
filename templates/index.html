@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phát Hiện Gian Lận Thẻ Tín Dụng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="text-center my-4">
+            <h1>Phát Hiện Gian Lận Thẻ Tín Dụng</h1>
+            <p class="lead">Kiểm tra các mô hình AI của chúng tôi để phát hiện giao dịch thẻ tín dụng gian lận</p>
+        </header>
+
+        <div class="row">
+            <!-- Bảng điều khiển Mô hình hàng đầu -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4>Mô Hình Hiệu Quả Nhất</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if top_models %}
+                            <div class="list-group">
+                                {% for model in top_models %}
+                                <button type="button" class="list-group-item list-group-item-action model-selector" 
+                                        data-model-id="{{ model.id }}">
+                                    <strong>{{ model.name }}</strong> {% if model.type == 'smote' %}(SMOTE){% endif %}
+                                    <div class="small">
+                                        Điểm F1: <span class="badge bg-success">{{ "%.4f"|format(model.f1_score) }}</span>
+                                        Độ chính xác: <span class="badge bg-info">{{ "%.4f"|format(model.accuracy) }}</span>
+                                    </div>
+                                </button>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                Không có mô hình hàng đầu khả dụng. Vui lòng chạy main.py để huấn luyện mô hình.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h4>Tất Cả Mô Hình Khả Dụng</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if available_models %}
+                            <select class="form-select" id="modelSelect">
+                                <option value="" selected>-- Chọn một mô hình --</option>
+                                {% for model in available_models %}
+                                <option value="{{ model }}">{{ model.replace('_', ' ').title() }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                Không có mô hình khả dụng. Vui lòng chạy main.py để huấn luyện mô hình.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bảng điều khiển chính -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-dark text-white">
+                        <h4>Nhập Dữ Liệu Giao Dịch</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="transactionForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="amount" class="form-label">Số tiền ($)</label>
+                                    <input type="number" class="form-control" id="amount" name="Amount" min="0" step="0.01" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="time" class="form-label">Thời gian (giây)</label>
+                                    <input type="number" class="form-control" id="time" name="Time" min="0" required>
+                                    <small class="text-muted">Số giây đã trôi qua kể từ giao dịch đầu tiên</small>
+                                </div>
+                            </div>
+
+                            <div class="accordion mb-3" id="featureAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFeatures">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFeatures">
+                                            Các Đặc Trưng Nâng Cao (V1-V28)
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFeatures" class="accordion-collapse collapse" aria-labelledby="headingFeatures" data-bs-parent="#featureAccordion">
+                                        <div class="accordion-body">
+                                            <p class="text-muted mb-3">Đây là các đặc trưng đã được biến đổi PCA từ dữ liệu giao dịch gốc. Bạn có thể sử dụng giá trị ngẫu nhiên để kiểm tra.</p>
+                                            <div class="row">
+                                                {% for i in range(1, 29) %}
+                                                <div class="col-md-3 mb-2">
+                                                    <label for="v{{ i }}" class="form-label">V{{ i }}</label>
+                                                    <input type="number" class="form-control form-control-sm feature-input" id="v{{ i }}" name="V{{ i }}" step="0.000001">
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <button type="button" class="btn btn-outline-secondary btn-sm" id="randomFeaturesBtn">Tạo Đặc Trưng Ngẫu Nhiên</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary" id="detectBtn">Phát Hiện Gian Lận</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Bảng kết quả -->
+                <div class="card mb-4" id="resultsCard" style="display: none;">
+                    <div class="card-header bg-info text-white">
+                        <h4>Kết Quả Dự Đoán</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="loadingSpinner" class="text-center" style="display: none;">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Đang tải...</span>
+                            </div>
+                            <p>Đang xử lý giao dịch...</p>
+                        </div>
+                        
+                        <div id="resultsContent">
+                            <div class="alert" id="fraudAlert" role="alert"></div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Chi Tiết Giao Dịch</h5>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Số tiền
+                                                    <span id="resultAmount" class="badge bg-primary rounded-pill"></span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Thời gian
+                                                    <span id="resultTime" class="badge bg-secondary rounded-pill"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Dự Đoán Của Mô Hình</h5>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Mô hình sử dụng
+                                                    <span id="resultModel" class="badge bg-info rounded-pill"></span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Xác suất gian lận
+                                                    <span id="resultProbability" class="badge bg-warning rounded-pill"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">Dự Án Phát Hiện Gian Lận Thẻ Tín Dụng</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 

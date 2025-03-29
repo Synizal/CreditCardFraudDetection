@@ -1,0 +1,8 @@
+{
+    "train_size": 226980,
+    "test_size": 56746,
+    "train_fraud_count": 378,
+    "test_fraud_count": 95,
+    "train_fraud_percentage": 0.16653449643140364,
+    "test_fraud_percentage": 0.16741268107003138
+}

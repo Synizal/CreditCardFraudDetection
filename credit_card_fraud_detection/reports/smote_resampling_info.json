@@ -1,0 +1,8 @@
+{
+    "original_shape": 226980,
+    "resampled_shape": 453204,
+    "original_fraud_count": 378,
+    "resampled_fraud_count": 226602,
+    "original_normal_count": 226602,
+    "resampled_normal_count": 226602
+}
