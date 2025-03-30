@@ -1,0 +1,6 @@
+2025-03-30 20:39:47,154 - fraud_detection - INFO - Starting credit card fraud detection analysis
+2025-03-30 20:39:47,154 - fraud_detection - INFO - 
+Loading and preprocessing data:
+2025-03-30 20:39:47,154 - fraud_detection - INFO - Checking for dataset...
+2025-03-30 20:39:47,154 - fraud_detection - INFO - Loading dataset...
+2025-03-30 20:39:48,026 - fraud_detection - INFO - Dataset loaded successfully from creditcard.csv
